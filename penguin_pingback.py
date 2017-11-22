@@ -43,15 +43,24 @@ def qier_pingback(accesstoken, msg_json):
     res = res_data.read()
     res_dict = json.loads(res)
     is_ok = res_dict["code"]
-    print res_dict["msg"].encode("utf-8","ignore")
     if is_ok == 0:
         return True
     else:
         return False
 
+accesstoken = get_accesstoken()
+success_num = 0
+total_num = 0
 for line in sys.stdin:
-    accesstoken = get_accesstoken()
+    total_num += 1
     line = line.strip()
     is_ok = qier_pingback(accesstoken, line)
     if is_ok == False:
         print >> sys.stderr,out_str
+    else:
+        success_num += 1
+    if  success_num % 2000 == 0:
+        print >> sys.stderr,success_num," messages success!"
+print >> sys.stderr, "total num is", total_num
+print >> sys.stderr, "total success num is", success_num
+

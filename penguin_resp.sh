@@ -1,5 +1,5 @@
 #/bin/bash
-#by yj,2017.9.6
+#by yj,2017.11.22
 
 alarm()
 {
@@ -42,7 +42,6 @@ if [[ $? != 0 ]]; then
 	alarm ${msg} ${timestamp}
 	exit -1
 fi
-
 
 hadoop fs -getmerge ${output_dir}/part* data/penguin_resp_${day}${hour}
 hadoop fs -rm -r ${output_dir}
