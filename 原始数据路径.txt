@@ -1,0 +1,2 @@
+hadoop_path_req="/user/appsearch_dev/feed_log/track/
+hadoop_path_resp="/user/appsearch_dev/feed_log/article_show/
