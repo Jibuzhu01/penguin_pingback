@@ -19,8 +19,11 @@ def get_accesstoken():
     req_url = "https://auth.om.qq.com/omoauth2/accesstoken"
     req = requests.post(url=req_url, data=params)
     #print req
-    req = urllib2.Request(url = req_url,data = params_encode)
-    res_data = urllib2.urlopen(req)
+    try:
+        req = urllib2.Request(url = req_url,data = params_encode)
+        res_data = urllib2.urlopen(req)
+    except:
+        return ""
     res = res_data.read()
     print res
 

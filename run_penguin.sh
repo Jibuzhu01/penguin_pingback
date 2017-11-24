@@ -13,8 +13,8 @@ alarm()
 
 day=`date -d "-2 hours" +"%Y%m%d"`
 hour=`date -d "-2 hours" +"%H"`
-statis_day=`date -d "-3 hours" +"%Y%m%d"`
-statis_hour=`date -d "-3 hours" +"%H"`
+statis_day=`date -d "-4 hours" +"%Y%m%d"`
+statis_hour=`date -d "-4 hours" +"%H"`
 
 original_req_dir=/user/appsearch_dev/feed_log/track/${day}/track-log_${day}_${hour}*lzo
 original_resp_dir=/user/appsearch_dev/feed_log/article_show/${day}/artshow-log_${day}_${hour}*lzo
