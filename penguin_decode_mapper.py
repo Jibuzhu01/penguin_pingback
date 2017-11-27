@@ -186,7 +186,7 @@ def decode_resp_log(line):
                 appendix_list.append("")
         (topic,keywords,mark,account,channel,art_source,account_openid,sub_topic,abtestid,position,image_type,aduser_flag,location,pagetime,rec_reason,adid,vulgar,sub_list,ip,recall_word,video_type,channel_id,doc_id,appmsgid,idx,new_sn,source_type) = appendix_list[0:27]
         if not account_openid.startswith("qie"): #首先判断是不是企鹅号的，不是就过了
-            return False
+            continue
 
         '''
         imsi = dev_info.get("imsi","")
@@ -250,7 +250,7 @@ def decode_resp_log(line):
         try:
             doc_id = link.split("tencentdocid=")[1][0:id_length]
         except:
-            return False
+            continue
 
         video_time = 0 #20.video_time
 

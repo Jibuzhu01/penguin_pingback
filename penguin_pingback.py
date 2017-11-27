@@ -81,10 +81,15 @@ total_num = 0
 accesstoken = ""
 accesstoken = get_accesstoken()
 fr = open(file_name)
+reset_token_time = 3600
+initialize_time = start_time
 for line in fr:
 #for line in sys.stdin:
     total_num += 1
     line = line.strip()
+    if int(time.time()) - initialize_time > reset_token_time:
+        initialize_time = int(time.time())
+        accesstoken = ""
     try:
         if accesstoken == "":
             accesstoken = try_again()

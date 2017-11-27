@@ -11,7 +11,7 @@ uid = "ouyuanbiao@sogou-inc.com"
 fr_name = "OuYuanBiao"
 title = "[ERROR] long term interest"
 mode = "html"
-maillist="yuanjun@sogou-inc.com"
+maillist="jizhihui@sogou-inc.com;yuanjun@sogou-inc.com"
 if len(sys.argv) >= 3 and sys.argv[2] == "1":
     maillist = "yuanjun@sogou-inc.com"
     
