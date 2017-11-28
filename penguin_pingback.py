@@ -37,24 +37,31 @@ def get_accesstoken():
         accesstoken = res_data.get("access_token","")
         return accesstoken
 
-def qier_pingback(accesstoken, msg_json, total_time):
+def make_log(prefix,separator,now_time,value):
+    return prefix + separator + now_time + separator + value
+
+def qier_pingback(accesstoken, msg_json):
 #    print "access_token in qier_pingback ", accesstoken
     params = {"access_token":accesstoken, "msg":msg_json}
     params_encode = urllib.urlencode(params)
     req_url = "https://api.om.qq.com/data/receiveclient"
-    url_start_time = int(time.time())
-    req = urllib2.Request(url = req_url,data = params_encode)
-    res_data = urllib2.urlopen(req)
-    total_time += int(time.time()) - url_start_time
+    now_time = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+    try:
+        req = urllib2.Request(url = req_url,data = params_encode)
+        res_data = urllib2.urlopen(req)
+    except:
+        print make_log("UNSUCCESS",'\t',now_time,"url_open_failed")
+        return False
     res = res_data.read()
     res_dict = json.loads(res)
 #   print res_dict
 #   print res_dict["msg"].encode("utf-8","ignore")
     is_ok = res_dict["code"]
     if is_ok == 0:
+        print make_log("SUCCESS",'\t',now_time," ")
         return True
     else:
-        print res_dict["msg"].encode("utf-8", "ignore")
+        print "UNSUCCESS","\t",now_time,"\t",res_dict["msg"].encode("utf-8", "ignore")
         return False
 
 #accesstoken = get_accesstoken()
@@ -72,8 +79,7 @@ def try_again():
             break
     print accesstoken
     return accesstoken
-    
-total_time = 0
+
 start_time = int(time.time())
 file_name = sys.argv[1]
 success_num = 0
@@ -93,23 +99,19 @@ for line in fr:
     try:
         if accesstoken == "":
             accesstoken = try_again()
-        is_ok = qier_pingback(accesstoken, line, total_time)
+        is_ok = qier_pingback(accesstoken, line)
     except:
         continue
+
     if is_ok == False:
         print line
     else:
         success_num += 1
-    if  success_num % 200 == 0:
-        ftime = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
-        print success_num," messages success! ", ftime
-        print "url request time: %d seconds" % total_time
 
 print "total num is %d" % total_num
 print "total success num is %d" % success_num
 end_time = int(time.time())
 print end_time - start_time,"s consumed"
-print "url request time: %d seconds" % total_time
 feature_list = []
 feature_list.append(construct_match_feature_with_value("WHNU","###",total_num))
 feature_list.append(construct_match_feature_with_value("SUNU","###",success_num))
